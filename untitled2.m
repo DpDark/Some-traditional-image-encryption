@@ -1,0 +1,20 @@
+%%图像格式是bmp,如果不是则要加RGB2GRAY函数转化
+x1=imread('lena.jpg');
+x2=imread('arnold_noise_rec.png');
+x1=double(x1);
+x2=double(x2);
+[m,n]=size(x1);
+[m2,n2]=size(x2);
+if m2~=m||n2~=n;
+error('图像选择错误');
+end;
+msevalue=0;
+for i=1:m;
+for j=1:n;
+msevalue=msevalue+(x1(i,j)-x2(i,j))^2;
+end;
+end;
+msevalue=msevalue/(m*n);
+disp(['输入数据的mse为:',num2str(msevalue)]);
+psnrvalue=255^2/msevalue;
+psnrvalue=10*log10(psnrvalue);
